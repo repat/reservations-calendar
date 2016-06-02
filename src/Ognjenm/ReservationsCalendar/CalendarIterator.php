@@ -2,15 +2,18 @@
 
 namespace Ognjenm\ReservationsCalendar;
 
-class CalendarIterator implements \Iterator {
+class CalendarIterator implements \Iterator
+{
 
     private $_ = [];
 
-    public function __construct($array = []) {
+    public function __construct($array = [])
+    {
         $this->_ = $array;
     }
 
-    function __toString() {
+    function __toString()
+    {
         $result = '';
         foreach ($this->_ as $date) {
             $result .= $date . '<br />';
@@ -18,64 +21,78 @@ class CalendarIterator implements \Iterator {
         return $result;
     }
 
-    function rewind() {
+    function rewind()
+    {
         reset($this->_);
     }
 
-    function current() {
+    function current()
+    {
         return current($this->_);
     }
 
-    function key() {
+    function key()
+    {
         return key($this->_);
     }
 
-    function next() {
+    function next()
+    {
         return next($this->_);
     }
 
-    function prev() {
+    function prev()
+    {
         return prev($this->_);
     }
 
-    function valid() {
+    function valid()
+    {
         $key = key($this->_);
         $var = ($key !== null && $key !== false);
         return $var;
     }
 
-    function count() {
+    function count()
+    {
         return count($this->_);
     }
 
-    function first() {
+    function first()
+    {
         return array_shift($this->_);
     }
 
-    function last() {
+    function last()
+    {
         return array_pop($this->_);
     }
 
-    function nth($n) {
+    function nth($n)
+    {
         $values = array_values($this->_);
         return isset($values[$n]) ? $values[$n] : null;
     }
 
-    function indexOf($needle) {
+    function indexOf($needle)
+    {
         return array_search($needle, array_values($this->_));
     }
 
-    function toArray() {
+    function toArray()
+    {
         return $this->_;
     }
 
-    function slice($offset = null, $limit = null) {
+    function slice($offset = null, $limit = null)
+    {
         if ($offset === null && $limit === null)
             return $this;
         return new CalendarIterator(array_slice($this->_, $offset, $limit));
     }
 
-    function limit($limit) {
+    function limit($limit)
+    {
         return $this->slice(0, $limit);
     }
 

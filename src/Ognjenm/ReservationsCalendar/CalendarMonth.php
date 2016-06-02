@@ -2,23 +2,27 @@
 
 namespace Ognjenm\ReservationsCalendar;
 
-class CalendarMonth extends CalendarObj {
+class CalendarMonth extends CalendarObj
+{
 
-    function __toString() {
+    function __toString()
+    {
         return $this->format('Y-m');
     }
 
-    function int() {
+    function int()
+    {
         return $this->monthINT;
     }
 
-    function weeks($force = false) {
+    function weeks($force = false)
+    {
 
         $first = $this->firstDay();
-        $week  = $first->week();
+        $week = $first->week();
 
         $currentMonth = $this->int();
-        $nextMonth    = $this->next()->int();
+        $nextMonth = $this->next()->int();
 
         $max = ($force) ? $force : 6;
 
@@ -42,24 +46,28 @@ class CalendarMonth extends CalendarObj {
 
     }
 
-    function countDays() {
+    function countDays()
+    {
         return date('t', $this->timestamp);
     }
 
-    function firstDay() {
+    function firstDay()
+    {
         return new CalendarDay($this->yearINT, $this->monthINT, 1);
     }
 
-    function lastDay() {
+    function lastDay()
+    {
         return new CalendarDay($this->yearINT, $this->monthINT, $this->countDays());
     }
 
-    function days() {
+    function days()
+    {
 
         // number of days per month
-        $days  = date('t', $this->timestamp);
+        $days = date('t', $this->timestamp);
         $array = [];
-        $ts    = $this->firstDay()->timestamp();
+        $ts = $this->firstDay()->timestamp();
 
         foreach (range(1, $days) as $day) {
             $array[] = $this->day($day);
@@ -69,23 +77,28 @@ class CalendarMonth extends CalendarObj {
 
     }
 
-    function day($day = 1) {
+    function day($day = 1)
+    {
         return new CalendarDay($this->yearINT, $this->monthINT, $day);
     }
 
-    function next() {
+    function next()
+    {
         return $this->plus('1month')->month();
     }
 
-    function prev() {
+    function prev()
+    {
         return $this->minus('1month')->month();
     }
 
-    function name() {
+    function name()
+    {
         return strftime('%B', $this->timestamp);
     }
 
-    function shortname() {
+    function shortname()
+    {
         return strftime('%b', $this->timestamp);
     }
 

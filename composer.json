@@ -1,23 +1,23 @@
 {
-    "name": "ognjenm/reservations-calendar",
-    "description": "This is rewriten [https://github.com/bastianallgeier/gantti] Gantt Class to fit my needs Eg. To show multiple events (bookings) per resource and Laravel 4 compatibility",
-    "authors": [
-        {
-            "name": "Ognjen Miletic",
-            "email": "ognjen.miletic@gmail.com"
-        }
+  "name": "ognjenm/reservations-calendar",
+  "description": "This is rewriten [https://github.com/bastianallgeier/gantti] Gantt Class to fit my needs Eg. To show multiple events (bookings) per resource and Laravel 4 compatibility",
+  "authors": [
+    {
+      "name": "Ognjen Miletic",
+      "email": "ognjen.miletic@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.5.9",
+    "illuminate/support": "5.2.*"
+  },
+  "autoload": {
+    "classmap": [
+      "src/migrations"
     ],
-    "require": {
-        "php": ">=5.5.9",
-        "illuminate/support": "5.1.*"
-    },
-    "autoload": {
-        "classmap": [
-            "src/migrations"
-        ],
-        "psr-0": {
-            "Ognjenm\\ReservationsCalendar\\": "src/"
-        }
-    },
-    "minimum-stability": "stable"
+    "psr-0": {
+      "Ognjenm\\ReservationsCalendar\\": "src/"
+    }
+  },
+  "minimum-stability": "stable"
 }
