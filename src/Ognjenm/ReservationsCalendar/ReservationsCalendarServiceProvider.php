@@ -31,7 +31,7 @@ class ReservationsCalendarServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app['rescalendar'] = $this->app->share(function ($app) {
+        $this->app->singleton('rescalendar', function ($app) {
             return new Gantti;
         });
     }
