@@ -1,6 +1,6 @@
 # Laravel 5 Booking calendar
 ## About
-This is rewriten [https://github.com/bastianallgeier/gantti] Gantt Class to fit my needs Eg. To show multiple events (bookings) per resource and Laravel 5 compatibility
+This is rewritten [Gantt Class](https://github.com/bastianallgeier/gantti) by *bastianallgeier* to fit my needs , e.g. to show multiple events (bookings) per resource and Laravel 5.7 compatibility.
 
 ## Screenshot
 
@@ -26,7 +26,7 @@ Composer will download the package. After the package is downloaded, open config
 
 Finally you need to publish a configuration file by running the following Artisan command.
 
-`php artisan vendor:publish --tag=public --force`
+`$ php artisan vendor:publish --tag=public --force`
 
 Include CSS in your view
 
