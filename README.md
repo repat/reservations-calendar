@@ -1,48 +1,32 @@
-#Laravel 5 Booking calendar
-##About
+# Laravel 5 Booking calendar
+## About
 This is rewriten [https://github.com/bastianallgeier/gantti] Gantt Class to fit my needs Eg. To show multiple events (bookings) per resource and Laravel 5 compatibility
 
-##Screenshot
+## Screenshot
 
-![](https://raw.githubusercontent.com/ognjenm/reservations-calendar/master/calendar.png)
+![Screenshot](https://raw.githubusercontent.com/ognjenm/reservations-calendar/master/calendar.png)
 
-##Installation
+## Installation
 
-Require ognjenm/reservations-calendar in composer.json and run composer update.
-
-```
-{
-    "require": {
-        "laravel/framework": "5.2.*",
-        ...
-        "ognjenm/reservations-calendar": "*"
-    }
-    ...
-}
-```
+`composer require repat/nachofassini-reservations-calendar`
 
 Composer will download the package. After the package is downloaded, open config/app.php and add the service provider and alias as below:
 
-```
-
+```php
 'providers' => array(
     ...
     \Ognjenm\ReservationsCalendar\ReservationsCalendarServiceProvider::class,
 ),
 
-
-
 'aliases' => array(
     ...
     'ResCalendar' => \Ognjenm\ReservationsCalendar\Facades\ResCalendar::class,
 ),
-
 ```
+
 Finally you need to publish a configuration file by running the following Artisan command.
 
-```
-php artisan vendor:publish --tag=public --force
-```
+`php artisan vendor:publish --tag=public --force`
 
 Include css in your view
 
@@ -51,9 +35,9 @@ Include css in your view
 
 ```
 
-###Examples
+### Examples
 
-Prepare data 
+#### Prepare data 
 ```
 
 $data[] = [
@@ -99,9 +83,9 @@ $data[] = [
 ```
 
 
-Render calendar
+#### Render calendar
 ```
 {!! ResCalendar::render($data,['title'=>'Hotel'])!!}
 ```
 
-##Contributions are welcomed
+## Contributions are welcome
