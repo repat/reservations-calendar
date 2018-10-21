@@ -4,15 +4,13 @@ namespace Ognjenm\ReservationsCalendar;
 
 class CalendarHour extends CalendarObj
 {
-
-    function int()
+    public function int()
     {
         return $this->hourINT;
     }
 
-    function minutes()
+    public function minutes()
     {
-
         $obj = $this;
         $array = [];
 
@@ -22,17 +20,15 @@ class CalendarHour extends CalendarObj
         }
 
         return new CalendarIterator($array);
-
     }
 
-    function next()
+    public function next()
     {
         return $this->plus('1hour')->hour();
     }
 
-    function prev()
+    public function prev()
     {
         return $this->minus('1hour')->hour();
     }
-
 }

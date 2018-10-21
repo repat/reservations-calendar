@@ -4,86 +4,84 @@ namespace Ognjenm\ReservationsCalendar;
 
 class CalendarDay extends CalendarObj
 {
-
-    function __toString()
+    public function __toString()
     {
         return $this->format('Y-m-d');
     }
 
-    function int()
+    public function int()
     {
         return $this->dayINT;
     }
 
-    function week()
+    public function week()
     {
         $week = date('W', $this->timestamp);
         $year = ($this->monthINT == 1 && $week > 5) ? $this->year()->prev() : $this->year();
         return new CalendarWeek($year->int(), $week);
     }
 
-    function next()
+    public function next()
     {
         return $this->plus('1day');
     }
 
-    function prev()
+    public function prev()
     {
         return $this->minus('1day');
     }
 
-    function weekday()
+    public function weekday()
     {
         return date('N', $this->timestamp);
     }
 
-    function name()
+    public function name()
     {
         return strftime('%A', $this->timestamp);
     }
 
-    function shortname()
+    public function shortname()
     {
         return strftime('%a', $this->timestamp);
     }
 
-    function isToday()
+    public function isToday()
     {
         $cal = new Calendar();
         return $this == $cal->today();
     }
 
-    function isYesterday()
+    public function isYesterday()
     {
         $cal = new Calendar();
         return $this == $cal->yesterday();
     }
 
-    function isTomorrow()
+    public function isTomorrow()
     {
         $cal = new Calendar();
         return $this == $cal->tomorrow();
     }
 
-    function isInThePast()
+    public function isInThePast()
     {
         return ($this->timestamp < Calendar::$now) ? true : false;
     }
 
-    function isInTheFuture()
+    public function isInTheFuture()
     {
         return ($this->timestamp > Calendar::$now) ? true : false;
     }
 
-    function isWeekend()
+    public function isWeekend()
     {
         $num = $this->format('w');
         return ($num == 6 || $num == 0) ? true : false;
     }
 
-    function hours()
+    public function hours()
     {
-
         $obj = $this;
         $array = [];
 
@@ -93,7 +91,5 @@ class CalendarDay extends CalendarObj
         }
 
         return new CalendarIterator($array);
-
     }
-
 }

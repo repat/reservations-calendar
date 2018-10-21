@@ -4,26 +4,26 @@ namespace Ognjenm\ReservationsCalendar;
 
 class CalendarWeek extends CalendarObj
 {
-
-    function __toString()
+    public function __toString()
     {
         return $this->firstDay()->format('Y-m-d') . ' - ' . $this->lastDay()->format('Y-m-d');
     }
 
-    var $weekINT;
+    public $weekINT;
 
-    function int()
+    public function int()
     {
         return $this->weekINT;
     }
 
-    function __construct($year = false, $week = false)
+    public function __construct($year = false, $week = false)
     {
-
-        if (!$year)
+        if (!$year) {
             $year = date('Y');
-        if (!$week)
+        }
+        if (!$week) {
             $week = date('W');
+        }
 
         $this->yearINT = intval($year);
         $this->weekINT = intval($week);
@@ -32,10 +32,9 @@ class CalendarWeek extends CalendarObj
         $monday = strtotime('-3days', $ts);
 
         parent::__construct(date('Y', $monday), date('m', $monday), date('d', $monday), 0, 0, 0);
-
     }
 
-    function years()
+    public function years()
     {
         $array = [];
         $array[] = $this->firstDay()->year();
@@ -47,7 +46,7 @@ class CalendarWeek extends CalendarObj
         return new CalendarIterator($array);
     }
 
-    function months()
+    public function months()
     {
         $array = [];
         $array[] = $this->firstDay()->month();
@@ -59,21 +58,20 @@ class CalendarWeek extends CalendarObj
         return new CalendarIterator($array);
     }
 
-    function firstDay()
+    public function firstDay()
     {
         $cal = new Calendar();
         return $cal->date($this->timestamp);
     }
 
-    function lastDay()
+    public function lastDay()
     {
         $first = $this->firstDay();
         return $first->plus('6 days');
     }
 
-    function days()
+    public function days()
     {
-
         $day = $this->firstDay();
         $array = [];
 
@@ -83,29 +81,23 @@ class CalendarWeek extends CalendarObj
         }
 
         return new CalendarIterator($array);
-
     }
 
-    function next()
+    public function next()
     {
-
         $next = strtotime('Thursday next week', $this->timestamp);
         $year = date('Y', $next);
         $week = date('W', $next);
 
         return new CalendarWeek($year, $week);
-
     }
 
-    function prev()
+    public function prev()
     {
-
         $prev = strtotime('Monday last week', $this->timestamp);
         $year = date('Y', $prev);
         $week = date('W', $prev);
 
         return new CalendarWeek($year, $week);
-
     }
-
 }

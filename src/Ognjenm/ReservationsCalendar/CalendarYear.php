@@ -4,18 +4,17 @@ namespace Ognjenm\ReservationsCalendar;
 
 class CalendarYear extends CalendarObj
 {
-
-    function __toString()
+    public function __toString()
     {
         return $this->format('Y');
     }
 
-    function int()
+    public function int()
     {
         return $this->yearINT;
     }
 
-    function months()
+    public function months()
     {
         $array = [];
         foreach (range(1, 12) as $month) {
@@ -24,12 +23,12 @@ class CalendarYear extends CalendarObj
         return new CalendarIterator($array);
     }
 
-    function month($month = 1)
+    public function month($month = 1)
     {
         return new CalendarMonth($this->yearINT, $month);
     }
 
-    function weeks()
+    public function weeks()
     {
         $array = [];
         $weeks = (int)date('W', mktime(0, 0, 0, 12, 31, $this->int)) + 1;
@@ -39,19 +38,18 @@ class CalendarYear extends CalendarObj
         return new CalendarIterator($array);
     }
 
-    function week($week = 1)
+    public function week($week = 1)
     {
         return new CalendarWeek($this, $week);
     }
 
-    function countDays()
+    public function countDays()
     {
         return (int)date('z', mktime(0, 0, 0, 12, 31, $this->yearINT)) + 1;
     }
 
-    function days()
+    public function days()
     {
-
         $days = $this->countDays();
         $array = [];
         $ts = false;
@@ -64,34 +62,32 @@ class CalendarYear extends CalendarObj
         }
 
         return new CalendarIterator($array);
-
     }
 
-    function next()
+    public function next()
     {
         return $this->plus('1year')->year();
     }
 
-    function prev()
+    public function prev()
     {
         return $this->minus('1year')->year();
     }
 
-    function name()
+    public function name()
     {
         return $this->int();
     }
 
-    function firstMonday()
+    public function firstMonday()
     {
         $cal = new Calendar();
         return $cal->date(strtotime('first monday of ' . date('Y', $this->timestamp)));
     }
 
-    function firstSunday()
+    public function firstSunday()
     {
         $cal = new Calendar();
         return $cal->date(strtotime('first sunday of ' . date('Y', $this->timestamp)));
     }
-
 }

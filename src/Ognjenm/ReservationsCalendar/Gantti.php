@@ -4,18 +4,17 @@ namespace Ognjenm\ReservationsCalendar;
 
 class Gantti
 {
-
-    var $cal = null;
-    var $data = [];
-    var $first = false;
-    var $last = false;
-    var $options = [];
-    var $cellstyle = false;
-    var $blocks = [];
-    var $events = [];
-    var $months = [];
-    var $days = [];
-    var $seconds = 0;
+    public $cal = null;
+    public $data = [];
+    public $first = false;
+    public $last = false;
+    public $options = [];
+    public $cellstyle = false;
+    public $blocks = [];
+    public $events = [];
+    public $months = [];
+    public $days = [];
+    public $seconds = 0;
     private $defaults = [
         'title' => 'Rezervacije',
         'cellwidth' => 35,
@@ -23,7 +22,7 @@ class Gantti
         'today' => true,
     ];
 
-    function __construct()
+    public function __construct()
     {
         $this->seconds = 60 * 60 * 24;
         $this->cal = new Calendar();
@@ -34,7 +33,6 @@ class Gantti
 
         //dd($this->data);
         foreach ($this->data as $d) {
-
             $this->properties[] = [
                 'name' => $d['label'],
                 'info' => isset($d['info']) ? $d['info'] : null,
@@ -56,10 +54,12 @@ class Gantti
                     'icon' => isset($event['icon']) ? $event['icon'] : 'fa-pencil',
                 ];
 
-                if (!$this->first || $this->first > $start)
+                if (!$this->first || $this->first > $start) {
                     $this->first = $start;
-                if (!$this->last || $this->last < $end)
+                }
+                if (!$this->last || $this->last < $end) {
                     $this->last = $end;
+                }
             }
 
 
@@ -67,8 +67,6 @@ class Gantti
                 'label' => $d['label'],
                 'events' => $events
             ];
-
-
         }
 
         // dd($this->first);
@@ -76,7 +74,9 @@ class Gantti
             $this->first = strtotime(date('Y-m-d'));
         }
         // dd($this->first);
-        if (!$this->last) $this->last = strtotime(date('Y-m-d'));
+        if (!$this->last) {
+            $this->last = strtotime(date('Y-m-d'));
+        }
 
         $this->first = $this->cal->date($this->first);
         $this->last = $this->cal->date($this->last);
@@ -101,12 +101,10 @@ class Gantti
 //    array_shift($this->days);
 //
 //}
-
     }
 
-    function render($data, $params = [])
+    public function render($data, $params = [])
     {
-
         $this->options = array_merge($this->defaults, $params);
         $this->data = $data;
 
@@ -155,7 +153,6 @@ class Gantti
         //$html[] = '<li class="gantt-day" ' . $wrapstyle . '><span ' . $cellstyle . '>22</span></li>';
 
         foreach ($this->days as $day) {
-
             $weekend = ($day->isWeekend()) ? ' weekend' : '';
             $today = ($day->isToday()) ? ' today' : '';
 
@@ -170,7 +167,6 @@ class Gantti
         $html[] = '<ul class="gantt-items" ' . $totalstyle . '>';
 
         foreach ($this->blocks as $i => $block) {
-
             $html[] = '<li class="gantt-item">';
             // days
             $html[] = $this->createDaysHtml($wrapstyle, $cellstyle);
@@ -181,7 +177,6 @@ class Gantti
 
 
             $html[] = '</li>';
-
         }
 
         $html[] = '</ul>';
@@ -196,7 +191,6 @@ class Gantti
             if ($today->timestamp > $this->first->month()->firstDay()->timestamp && $today->timestamp < $this->last->month()->lastDay()->timestamp) {
                 $html[] = '<time style="top: ' . ($this->options['cellheight'] * 2) . 'px; left: ' . $left . 'px" datetime="' . $today->format('Y-m-d') . '">Today</time>';
             }
-
         }
 
         // end data section
@@ -206,7 +200,6 @@ class Gantti
         $html[] = '</figure>';
 
         return implode('', $html);
-
     }
 
     /**
@@ -230,11 +223,14 @@ class Gantti
         $icon = $event['icon'];
         $tooltip = $event['tooltip'];
 
-        if ($days < 3) $label_shorten = null;
-        elseif ($days < 8) {
+        if ($days < 3) {
+            $label_shorten = null;
+        } elseif ($days < 8) {
             $slova = $days * 2 + 3;
             $label_shorten = substr($event['label'], 0, $slova) . '...';
-        } else $label_shorten = $event['label'];
+        } else {
+            $label_shorten = $event['label'];
+        }
 
 
         $html = '<span  class="gantt-block' . $class . '" style="left: ' . $left . 'px; width: ' . $width . 'px; height: ' . $height . 'px">';
@@ -248,7 +244,6 @@ class Gantti
         $html .= '<span style="display: inline-block; margin-top:3px; margin-left:5px; color:white;">' . $label_shorten . '</span>';
         $html .= '</span>';
         return $html;
-
     }
 
     private function createDaysHtml($wrapstyle, $cellstyle)
@@ -257,7 +252,6 @@ class Gantti
         //  $html .= '<li class="gantt-day" ' . $wrapstyle . '><span ' . $cellstyle . '>Soba 303</span></li>';
 
         foreach ($this->days as $day) {
-
             $weekend = ($day->isWeekend()) ? ' weekend' : '';
             $today = ($day->isToday()) ? ' today' : '';
 
@@ -284,5 +278,4 @@ class Gantti
 //    function __toString() {
 //        //return $this->render();
 //    }
-
 }

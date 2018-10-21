@@ -1,4 +1,6 @@
-<?php namespace Ognjenm\ReservationsCalendar;
+<?php
+
+namespace Ognjenm\ReservationsCalendar;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -43,7 +45,6 @@ class ReservationsCalendarServiceProvider extends ServiceProvider
      */
     public function provides()
     {
-        return array('rescalendar');
+        return ['rescalendar'];
     }
-
 }

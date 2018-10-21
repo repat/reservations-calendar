@@ -1,6 +1,6 @@
 # Laravel 5 Booking Calendar
 ## About
-This is rewritten [Gantt Class](https://github.com/bastianallgeier/gantti) by *bastianallgeier* to fit my needs , e.g. to show multiple events (bookings) per resource and Laravel 5.7 compatibility.
+This is the rewritten [Gantt Class](https://github.com/bastianallgeier/gantti) by *bastianallgeier* to fit my needs , e.g. to show multiple events (bookings) per resource and Laravel 5.7 compatibility.
 
 ## Screenshot
 
@@ -37,7 +37,7 @@ Include CSS in your view
 
 ### Examples
 
-#### Prepare data 
+#### Prepare data
 ```php
 $data[] = [
     'label' => 'Soba 1',
