@@ -144,7 +144,7 @@ class Gantti
         // months headers
         $html[] = '<ul class="gantt-months" ' . $totalstyle . '>';
         foreach ($this->months as $month) {
-            $html[] = '<li class="gantt-month" style="width: ' . ($this->options['cellwidth'] * $month->countDays()) . 'px"><strong ' . $cellstyle . '>' . $month->name() . '</strong></li>';
+            $html[] = '<li class="gantt-month" style="width: ' . ($this->options['cellwidth'] * $month->countDays()) . 'px"><strong ' . $cellstyle . '>' . $month->name() . ' ' . $month->year()->name() . '</strong></li>';
         }
         $html[] = '</ul>';
 
