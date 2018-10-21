@@ -28,9 +28,9 @@ Finally you need to publish a configuration file by running the following Artisa
 
 `php artisan vendor:publish --tag=public --force`
 
-Include css in your view
+Include CSS in your view
 
-```
+```html
 <link href="{{asset('vendor/ognjenm/calendar.css}}" rel="stylesheet" type="text/css">
 
 ```
@@ -38,8 +38,7 @@ Include css in your view
 ### Examples
 
 #### Prepare data 
-```
-
+```php
 $data[] = [
     'label' => 'Soba 1',
     'info' => '2+1',
@@ -82,10 +81,7 @@ $data[] = [
 
 ```
 
-
-#### Render calendar
+#### Render Calendar
 ```
 {!! ResCalendar::render($data,['title'=>'Hotel'])!!}
 ```
-
-## Contributions are welcome
