@@ -1,6 +1,6 @@
 {
   "name": "repat/nachofassini-reservations-calendar",
-  "description": "This is rewriten [https://github.com/bastianallgeier/gantti] Gantt Class to fit my needs Eg. To show multiple events (bookings) per resource and Laravel 5.7 compatibility",
+  "description": "This is rewritten bastianallgeier/gantti class to fit my needs, e.g. to show multiple events (bookings) per resource. Then upgraded from Ognjens 5.2 version to 5.7.",
   "authors": [
     {
       "name": "Ognjen Miletic",
@@ -11,7 +11,7 @@
       "email": "repat@repat.de"
     }
   ],
-  "version":"4.0",
+  "version":"4.1",
   "require": {
     "php": ">=5.6",
     "illuminate/support": "5.7.*"
