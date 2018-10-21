@@ -31,7 +31,7 @@ Finally you need to publish a configuration file by running the following Artisa
 Include CSS in your view
 
 ```html
-<link href="{{asset('vendor/ognjenm/calendar.css}}" rel="stylesheet" type="text/css">
+<link href="{{ asset('vendor/ognjenm/calendar.css') }}" rel="stylesheet" type="text/css">
 
 ```
 
@@ -82,6 +82,6 @@ $data[] = [
 ```
 
 #### Render Calendar
-```
-{!! ResCalendar::render($data,['title'=>'Hotel'])!!}
+```php
+{!! ResCalendar::render($data,['title'=>'Hotel'] )!!}
 ```
