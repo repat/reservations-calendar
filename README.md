@@ -83,5 +83,5 @@ $data[] = [
 
 #### Render Calendar
 ```php
-{!! ResCalendar::render($data,['title'=>'Hotel'] )!!}
+{!! ResCalendar::render($data, ['title' => 'Hotel']) !!}
 ```
