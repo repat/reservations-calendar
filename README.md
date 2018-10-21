@@ -1,4 +1,4 @@
-# Laravel 5 Booking calendar
+# Laravel 5 Booking Calendar
 ## About
 This is rewritten [Gantt Class](https://github.com/bastianallgeier/gantti) by *bastianallgeier* to fit my needs , e.g. to show multiple events (bookings) per resource and Laravel 5.7 compatibility.
 
@@ -8,7 +8,7 @@ This is rewritten [Gantt Class](https://github.com/bastianallgeier/gantti) by *b
 
 ## Installation
 
-`composer require repat/nachofassini-reservations-calendar`
+`$ composer require repat/nachofassini-reservations-calendar`
 
 Composer will download the package. After the package is downloaded, open config/app.php and add the service provider and alias as below:
 
@@ -81,7 +81,7 @@ $data[] = [
 
 ```
 
-#### Render Calendar
+#### Render Calendar in View
 ```php
 {!! ResCalendar::render($data, ['title' => 'Hotel']) !!}
 ```
