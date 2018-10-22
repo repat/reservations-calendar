@@ -255,7 +255,7 @@ class Gantti
             $weekend = ($day->isWeekend()) ? ' weekend' : '';
             $today = ($day->isToday()) ? ' today' : '';
 
-            $html .= '<li class="gantt-day' . $weekend . $today . '" ' . $wrapstyle . '><span ' . $cellstyle . '>' . $day . '</span></li>';
+            $html .= '<li class="gantt-day' . $weekend . $today . '" ' . $wrapstyle . '><span ' . $cellstyle . '></span></li>';
         }
         $html .= '</ul>';
 
