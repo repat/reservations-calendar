@@ -236,9 +236,9 @@ class Gantti
         $html = '<span  class="gantt-block' . $class . '" style="left: ' . $left . 'px; width: ' . $width . 'px; height: ' . $height . 'px">';
 
         if ($event['tooltip']) {
-            $html .= '<a href="' . $url . '" style="margin-top:3px; margin-left:5px;" class="btn blue"  data-placement="top" tabindex="' . $i . '" data-html="true" data-trigger="focus" data-toggle="popover" title="' . $label . '" data-content="' . $tooltip . '"><i class="fa ' . $icon . '"></i></a>';
+            $html .= '<a href="' . $url . '" style="margin-top:3px; margin-left:5px;" class="btn black"  data-placement="top" tabindex="' . $i . '" data-html="true" data-trigger="focus" data-toggle="popover" title="' . $label . '" data-content="' . $tooltip . '"><i class="fa ' . $icon . '"></i> ' . $tooltip . '</a>';
         } else {
-            $html .= '<a href="' . $url . '" style="margin-top:3px; margin-left:5px;" class="btn blue"><i class="fa ' . $icon . '"></i></a>';
+            $html .= '<a href="' . $url . '" style="margin-top:3px; margin-left:5px;" class="btn black"><i class="fa ' . $icon . '"></i> ' . $tooltip . '</a>';
         }
 
         $html .= '<span style="display: inline-block; margin-top:3px; margin-left:5px; color:white;">' . $label_shorten . '</span>';
