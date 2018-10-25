@@ -54,12 +54,12 @@ class Gantti
                     'icon' => isset($event['icon']) ? $event['icon'] : 'fa-pencil',
                 ];
 
-                if (!$this->first || $this->first > $start) {
-                    $this->first = $start;
-                }
-                if (!$this->last || $this->last < $end) {
-                    $this->last = $end;
-                }
+                // if (!$this->first || $this->first > $start) {
+                //     $this->first = $start;
+                // }
+                // if (!$this->last || $this->last < $end) {
+                //     $this->last = $end;
+                // }
             }
 
 
@@ -69,13 +69,12 @@ class Gantti
             ];
         }
 
-        // dd($this->first);
         if ($this->first == false) {
-            $this->first = strtotime(date('Y-m-d'));
+            $this->first = strtotime(\Carbon\Carbon::parse($this->options['start'])->toDateString());
         }
         // dd($this->first);
         if (!$this->last) {
-            $this->last = strtotime(date('Y-m-d'));
+            $this->last = strtotime(\Carbon\Carbon::parse($this->options['start'])->addYear());
         }
 
         $this->first = $this->cal->date($this->first);
@@ -233,12 +232,12 @@ class Gantti
         }
 
 
-        $html = '<span  class="gantt-block' . $class . '" style="left: ' . $left . 'px; width: ' . $width . 'px; height: ' . $height . 'px">';
+        $html = '<span class="gantt-block' . $class . '" style="left: ' . max($left, 0) . 'px; width: ' . $width . 'px; height: ' . $height . 'px; text-align: left;">';
 
         if ($event['tooltip']) {
-            $html .= '<a href="' . $url . '" style="margin-top:3px; margin-left:5px;" class="btn black"  data-placement="top" tabindex="' . $i . '" data-html="true" data-trigger="focus" data-toggle="popover" title="' . $label . '" data-content="' . $tooltip . '"><i class="fa ' . $icon . '"></i> ' . $tooltip . '</a>';
+            $html .= '<a href="' . $url . '" style="margin-top:3px; margin-left:5px;" class="btn black"  data-placement="top" tabindex="' . $i . '" data-html="true" data-trigger="focus" data-toggle="popover" title="' . $label . '" data-content="' . $tooltip . '">' . ($left < 0 ? '...' : '') . ' <i class="fa ' . $icon . '"></i> ' . $tooltip . '</a>';
         } else {
-            $html .= '<a href="' . $url . '" style="margin-top:3px; margin-left:5px;" class="btn black"><i class="fa ' . $icon . '"></i> ' . $tooltip . '</a>';
+            $html .= '<a href="' . $url . '" style="margin-top:3px; margin-left:5px;" class="btn black">' . ($left < 0 ? '...' : '') . ' <i class="fa ' . $icon . '"></i> ' . $tooltip . '</a>';
         }
 
         $html .= '<span style="display: inline-block; margin-top:3px; margin-left:5px; color:white;">' . $label_shorten . '</span>';
