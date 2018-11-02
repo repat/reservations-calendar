@@ -267,7 +267,7 @@ class Gantti
         $html = '<aside>';
         $html .= '<ul class="gantt-labels" style="margin-top: ' . (($this->options['cellheight'] * 2) + 1) . 'px">';
         foreach ($this->properties as $room) {
-            $html .= '<li class="gantt-label"><strong ' . $cellstyle . '>  ' . $room['name'] . '<span class="label pull-right" style="background-color: ' . $room['class'] . '">' . $room['info'] . '</span></strong></li>';
+            $html .= '<li class="gantt-label"><strong ' . $cellstyle . ' data-original-title=" '.$room['name'] . '" data-content="' . $room['info'] . '" data-placement="top" data-trigger="hover" data-toggle="popover" title="">  ' . $room['name'] . '<span class="label pull-right" style="background-color: ' . $room['class'] . '">' . $room['info'] . '</span></strong></li>';
         }
         $html .= '</ul>';
         $html .= '</aside>';
