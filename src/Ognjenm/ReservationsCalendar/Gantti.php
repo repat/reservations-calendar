@@ -14,7 +14,6 @@ class Gantti
     public $events = [];
     public $months = [];
     public $days = [];
-    public $seconds = 0;
     private $defaults = [
         'title' => 'Rezervacije',
         'cellwidth' => 35,
@@ -22,9 +21,10 @@ class Gantti
         'today' => true,
     ];
 
+    const ONE_DAY_IN_SECONDS = 60 * 60 * 24;
+
     public function __construct()
     {
-        $this->seconds = 60 * 60 * 24;
         $this->cal = new Calendar();
     }
 
@@ -184,7 +184,7 @@ class Gantti
 
             // today
             $today = $this->cal->today();
-            $offset = (($today->timestamp - $this->first->month()->timestamp) / $this->seconds);
+            $offset = (($today->timestamp - $this->first->month()->timestamp) / self::ONE_DAY_IN_SECONDS);
             $left = round($offset * $this->options['cellwidth']) + round(($this->options['cellwidth'] / 2) - 1);
 
             if ($today->timestamp > $this->first->month()->firstDay()->timestamp && $today->timestamp < $this->last->month()->lastDay()->timestamp) {
@@ -210,8 +210,17 @@ class Gantti
      */
     private function createSingleEventHtml($event, $i)
     {
-        $days = (($event['end'] - $event['start']) / $this->seconds) + 0.20; // dodato 0.2
-        $offset = (($event['start'] - $this->first->month()->timestamp) / $this->seconds) + 0.35; //dodato 0.35
+        $eventStart = \Carbon\Carbon::createFromTimestamp($event['start']);
+        $firstEvent = \Carbon\Carbon::createFromTimestamp($this->first->month()->timestamp);
+
+        if ($eventStart->isSameMonth($firstEvent)) {
+            $diff = $event['start'];
+        } else {
+            $diff = $this->first->month()->timestamp;
+        }
+
+        $days = (($event['end'] -  $diff) / self::ONE_DAY_IN_SECONDS) + 1.00; // dodato 0.2 // changed to 1.00
+        $offset = (($event['start'] - $this->first->month()->timestamp) / self::ONE_DAY_IN_SECONDS) + 0.35; //dodato 0.35
         $top = round($i * ($this->options['cellheight'] + 1));
         $left = round($offset * $this->options['cellwidth']);
         $width = round($days * $this->options['cellwidth'] - 9);
@@ -230,7 +239,6 @@ class Gantti
         } else {
             $label_shorten = $event['label'];
         }
-
 
         $html = '<span class="gantt-block' . $class . '" style="left: ' . max($left, 0) . 'px; width: ' . $width . 'px; height: ' . $height . 'px; text-align: left;">';
 
