@@ -11,7 +11,7 @@
       "email": "repat@repat.de"
     }
   ],
-  "version":"4.2.9",
+  "version":"4.2.10",
   "require": {
     "php": ">=7.1.3",
     "illuminate/support": "5.7.*"
