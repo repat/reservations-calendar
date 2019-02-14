@@ -213,16 +213,14 @@ class Gantti
         $eventStart = \Carbon\Carbon::createFromTimestamp($event['start']);
         $firstEvent = \Carbon\Carbon::createFromTimestamp($this->first->month()->timestamp);
 
-        // if ($eventStart->isSameMonth($firstEvent)) {
-        //     $diff = $event['start'];
-        // } else {
-        //     $diff = $this->first->month()->timestamp;
-        // }
-
-        $diff = $event['start'];
+        if ($eventStart->lessThan($firstEvent)) {
+            $diff = $this->first->month()->timestamp;
+        } else {
+            $diff = $event['start'];
+        }
 
         $days = (($event['end'] -  $diff) / self::ONE_DAY_IN_SECONDS) + 1.00; // dodato 0.2 // changed to 1.00
-        $offset = (($event['start'] - $this->first->month()->timestamp) / self::ONE_DAY_IN_SECONDS) + 0.35; //dodato 0.35
+        $offset = (($event['start'] - $this->first->month()->timestamp) / self::ONE_DAY_IN_SECONDS); //dodato 0.35 // changed to none
         $top = round($i * ($this->options['cellheight'] + 1));
         $left = round($offset * $this->options['cellwidth']);
         $width = round($days * $this->options['cellwidth'] - 9);
@@ -242,7 +240,7 @@ class Gantti
             $label_shorten = $event['label'];
         }
 
-        $html = '<span class="gantt-block' . $class . '" style="left: ' . max($left, 0) . 'px; width: ' . $width . 'px; height: ' . $height . 'px; text-align: left;" data-position-left="'.max($left, 0).'" data-width="'.$width.'" data-check-datas="'.$days.' '.$diff.' '.$offset.' '.$event['start'].' '.$event['end'].' '.ONE_DAY_IN_SECONDS.'">';
+        $html = '<span class="gantt-block' . $class . '" style="left: ' . max($left, 0) . 'px; width: ' . $width . 'px; height: ' . $height . 'px; text-align: left;" data-position-left="'.max($left, 0).'" data-width="'.$width.'">';
 
         if ($event['tooltip']) {
             $html .= '<a href="' . $url . '" style="margin-top:3px; margin-left:5px;" class="btn black"  data-placement="top" tabindex="' . $i . '" data-html="true" data-trigger="focus" data-toggle="popover" title="' . $label . '" data-content="' . $tooltip . '">' . ($left < 0 ? '...' : '') . ' <i class="fa ' . $icon . '"></i> ' . $tooltip . '</a>';
