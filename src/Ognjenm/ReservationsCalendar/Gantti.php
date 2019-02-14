@@ -242,7 +242,7 @@ class Gantti
             $label_shorten = $event['label'];
         }
 
-        $html = '<span class="gantt-block' . $class . '" style="left: ' . max($left, 0) . 'px; width: ' . $width . 'px; height: ' . $height . 'px; text-align: left;" data-position-left="'.max($left, 0).'" data-width="'.$width.'" data-check-datas="'.$days.' '.$diff.' '.$offset.' '.$event['start'].' '.$event['end'].'">';
+        $html = '<span class="gantt-block' . $class . '" style="left: ' . max($left, 0) . 'px; width: ' . $width . 'px; height: ' . $height . 'px; text-align: left;" data-position-left="'.max($left, 0).'" data-width="'.$width.'" data-check-datas="'.$days.' '.$diff.' '.$offset.' '.$event['start'].' '.$event['end'].' '.ONE_DAY_IN_SECONDS.'">';
 
         if ($event['tooltip']) {
             $html .= '<a href="' . $url . '" style="margin-top:3px; margin-left:5px;" class="btn black"  data-placement="top" tabindex="' . $i . '" data-html="true" data-trigger="focus" data-toggle="popover" title="' . $label . '" data-content="' . $tooltip . '">' . ($left < 0 ? '...' : '') . ' <i class="fa ' . $icon . '"></i> ' . $tooltip . '</a>';
