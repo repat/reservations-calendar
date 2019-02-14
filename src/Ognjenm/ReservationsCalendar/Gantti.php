@@ -213,11 +213,13 @@ class Gantti
         $eventStart = \Carbon\Carbon::createFromTimestamp($event['start']);
         $firstEvent = \Carbon\Carbon::createFromTimestamp($this->first->month()->timestamp);
 
-        if ($eventStart->lessThan($firstEvent)) {
-            $diff = $this->first->month()->timestamp;
-        } else {
-            $diff = $event['start'];
-        }
+        // if ($eventStart->isSameMonth($firstEvent)) {
+        //     $diff = $event['start'];
+        // } else {
+        //     $diff = $this->first->month()->timestamp;
+        // }
+
+        $diff = $event['start'];
 
         $days = (($event['end'] -  $diff) / self::ONE_DAY_IN_SECONDS) + 1.00; // dodato 0.2 // changed to 1.00
         $offset = (($event['start'] - $this->first->month()->timestamp) / self::ONE_DAY_IN_SECONDS) + 0.35; //dodato 0.35
