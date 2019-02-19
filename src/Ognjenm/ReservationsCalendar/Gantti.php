@@ -19,6 +19,7 @@ class Gantti
         'cellwidth' => 35,
         'cellheight' => 35,
         'today' => true,
+        'monthago' => '3month',
     ];
 
     const ONE_DAY_IN_SECONDS = 60 * 60 * 24;
@@ -85,7 +86,12 @@ class Gantti
 
         // build the months
         while ($current->lastDay()->timestamp <= $lastDay) {
-            $month = $current->month();
+            if($this->options['monthago']) {
+                $month = $current->month()->past($this->options['monthago']);
+            } else {
+                $month = $current->month();
+            }
+
             $this->months[] = $month;
             foreach ($month->days() as $day) {
                 // if( $month == $current month && $day + $offset_days > $today)
@@ -134,8 +140,17 @@ class Gantti
         // set sidebar with labels
         $html[] = $this->renderSidebar($cellstyle);
 
+        $today = $this->cal->today();
+        if($this->options['monthago']) {
+            $offset = (($today->timestamp - $this->first->month()->past($this->options['monthago'])->timestamp) / self::ONE_DAY_IN_SECONDS);
+        } else {
+            $offset = (($today->timestamp - $this->first->month()->timestamp) / self::ONE_DAY_IN_SECONDS);
+        }
+
+        $scroll = round(($offset * $this->options['cellwidth']) - 1);
+
         // data section
-        $html[] = '<section id="events-area" class="gantt-data">';
+        $html[] = '<section id="events-area" class="gantt-data" data-scroll="'.$scroll.'">';
 
         // data header section
         $html[] = '<header>';
@@ -184,7 +199,12 @@ class Gantti
 
             // today
             $today = $this->cal->today();
-            $offset = (($today->timestamp - $this->first->month()->timestamp) / self::ONE_DAY_IN_SECONDS);
+            if($this->options['monthago']) {
+                $offset = (($today->timestamp - $this->first->month()->past($this->options['monthago'])->timestamp) / self::ONE_DAY_IN_SECONDS);    
+            } else {
+                $offset = (($today->timestamp - $this->first->month()->timestamp) / self::ONE_DAY_IN_SECONDS);
+            }
+
             $left = round($offset * $this->options['cellwidth']) + round(($this->options['cellwidth'] / 2) - 1);
 
             if ($today->timestamp > $this->first->month()->firstDay()->timestamp && $today->timestamp < $this->last->month()->lastDay()->timestamp) {
@@ -214,13 +234,23 @@ class Gantti
         $firstEvent = \Carbon\Carbon::createFromTimestamp($this->first->month()->timestamp);
 
         if ($eventStart->lessThan($firstEvent)) {
-            $diff = $this->first->month()->timestamp;
+            if($this->options['monthago']) {
+                $diff = $this->first->month()->past($this->options['monthago'])->timestamp;
+            } else {
+                $diff = $this->first->month()->timestamp;
+            }
         } else {
             $diff = $event['start'];
         }
 
         $days = (($event['end'] -  $diff) / self::ONE_DAY_IN_SECONDS) + 1.00; // dodato 0.2 // changed to 1.00
-        $offset = (($event['start'] - $this->first->month()->timestamp) / self::ONE_DAY_IN_SECONDS); //dodato 0.35 // changed to none
+
+        if($this->options['monthago']) {
+            $offset = (($event['start'] - $this->first->month()->past($this->options['monthago'])->timestamp) / self::ONE_DAY_IN_SECONDS); //dodato 0.35 changed to none
+        } else {
+            $offset = (($event['start'] - $this->first->month()->timestamp) / self::ONE_DAY_IN_SECONDS); //dodato 0.35 changed to none
+        }
+
         $top = round($i * ($this->options['cellheight'] + 1));
         $left = round($offset * $this->options['cellwidth']);
         $width = round($days * $this->options['cellwidth'] - 9);
@@ -240,7 +270,7 @@ class Gantti
             $label_shorten = $event['label'];
         }
 
-        $html = '<span class="gantt-block' . $class . '" style="left: ' . max($left, 0) . 'px; width: ' . $width . 'px; height: ' . $height . 'px; text-align: left;" data-position-left="'.max($left, 0).'" data-width="'.$width.'">';
+        $html = '<span class="gantt-block' . $class . '" style="left: ' . max($left, 0) . 'px; width: ' . $width . 'px; height: ' . $height . 'px; text-align: left;" data-position-left="'.max($left, 0).'" data-width="'.$width.'" data-check-datas="'.$days.' '.$diff.' '.$offset.' '.$event['start'].' '.$event['end'].'">';
 
         if ($event['tooltip']) {
             $html .= '<a href="' . $url . '" style="margin-top:3px; margin-left:5px;" class="btn black"  data-placement="top" tabindex="' . $i . '" data-html="true" data-trigger="focus" data-toggle="popover" title="' . $label . '" data-content="' . $tooltip . '">' . ($left < 0 ? '...' : '') . ' <i class="fa ' . $icon . '"></i> ' . $tooltip . '</a>';

@@ -98,4 +98,9 @@ class CalendarMonth extends CalendarObj
     {
         return strftime('%b', $this->timestamp);
     }
+
+    public function past($month)
+    {
+        return $this->minus($month)->month();
+    }
 }
