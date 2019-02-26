@@ -189,7 +189,6 @@ class Gantti
                 $html[] = $this->createSingleEventHtml($event, $i);
             }
 
-
             $html[] = '</li>';
         }
 
@@ -235,13 +234,16 @@ class Gantti
         $eventEnd = \Carbon\Carbon::createFromTimestamp($event['end'])->timestamp;
         $firstEvent = \Carbon\Carbon::createFromTimestamp($this->first->month()->timestamp);
         $calendarStart = $this->first->month()->past($this->options['monthago'])->timestamp;
+        $calendarStartDate = \Carbon\Carbon::createFromTimestamp($calendarStart);
 
         if ($eventStart->lessThan($firstEvent)) {
-            if($this->options['monthago']) {
+
+            $diff = $this->first->month()->timestamp;
+
+            if($eventStart->lessThan($calendarStartDate)){
                 $diff = $calendarStart;
-            } else {
-                $diff = $this->first->month()->timestamp;
             }
+
         } else {
             $diff = $event['start'];
         }
@@ -274,7 +276,7 @@ class Gantti
         }
 
         if($eventEnd >= $calendarStart){
-            $html = '<span data-start="'.$calendarStart.'" data-end="'.$eventEnd.'" class="gantt-block' . $class . ''.($width < 120 ? ' collapsed' : '').'" style="left: ' . max($left, 0) . 'px; width: ' . $width . 'px; height: ' . $height . 'px; text-align: left;" data-position-left="'.max($left, 0).'" data-width="'.$width.'" data-check-datas="'.$days.' '.$diff.' '.$offset.' '.$event['start'].' '.$event['end'].'">';
+            $html = '<span class="gantt-block' . $class . ''.($width < 120 ? ' collapsed' : '').'" style="left: ' . max($left, 0) . 'px; width: ' . $width . 'px; height: ' . $height . 'px; text-align: left;" data-position-left="'.max($left, 0).'" data-width="'.$width.'">';
 
             if ($event['tooltip']) {
                 $html .= '<a href="' . $url . '" style="margin-top:3px; margin-left:5px;" class="btn black"  data-placement="top" tabindex="' . $i . '" data-html="true" data-trigger="focus" data-toggle="popover" title="' . $label . '" data-content="' . $tooltip . '">' . ($left < 0 ? '...' : '') . ' <span><i class="fa ' . $icon . '"></i>' . $tooltip . '</span></a>';
