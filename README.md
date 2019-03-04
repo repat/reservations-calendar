@@ -1,6 +1,8 @@
 # Laravel 5 Booking Calendar
-## About
-This is the rewritten [Gantt Class](https://github.com/bastianallgeier/gantti) by *bastianallgeier* to fit my needs , e.g. to show multiple events (bookings) per resource, looking 3 months into the past and Laravel 5.7 compatibility.
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/repat/nachofassini-reservations-calendar.svg?style=flat-square)](https://packagist.org/packages/repat/nachofassini-reservations-calendar)
+[![Total Downloads](https://img.shields.io/packagist/dt/repat/nachofassini-reservations-calendar.svg?style=flat-square)](https://packagist.org/packages/repat/nachofassini-reservations-calendar)
+
+**repat/nachofassini-reservations-calendar** is the rewritten [Gantt Class](https://github.com/bastianallgeier/gantti) by *bastianallgeier* to fit different needs, e.g. to show multiple events (bookings) per resource, looking 3 months into the past and Laravel 5.7+ compatibility.
 
 ## Screenshot
 

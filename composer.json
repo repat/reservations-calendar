@@ -3,18 +3,26 @@
   "description": "This is rewritten bastianallgeier/gantti class to fit my needs, e.g. to show multiple events (bookings) per resource. Then upgraded from Ognjens 5.2 version to 5.7.",
   "authors": [
     {
+      "name": "Bastian Allgeier",
+      "email": "mail@getkirby.com"
+    },
+    {
       "name": "Ognjen Miletic",
       "email": "ognjen.miletic@gmail.com"
     },
     {
       "name": "repat",
       "email": "repat@repat.de"
+    },
+    {
+      "name": "phelm",
+      "email": "honeydove_mhar@yahoo.com"
     }
   ],
-  "version":"4.2.12",
+  "version":"4.2.13.2",
   "require": {
     "php": ">=7.1.3",
-    "illuminate/support": "5.7.*"
+    "illuminate/support": "5.7.*|5.8.*"
   },
   "autoload": {
     "psr-0": {
