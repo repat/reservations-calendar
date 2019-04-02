@@ -22,8 +22,6 @@ class Gantti
         'monthago' => '3month',
     ];
 
-    const ONE_DAY_IN_SECONDS = 60 * 60 * 24;
-
     public function __construct()
     {
         $this->cal = new Calendar();
@@ -46,7 +44,7 @@ class Gantti
                 //dd($event);
                 $events[] = [
                     'start' => $start = strtotime($event['start']),
-                    'end' => $end = strtotime($event['end']),
+                    'end' => $end = !empty(strtotime($event['end'])) ? strtotime($event['end']) : (strtotime($event['start']->addDays($this->days_left_in_year($event['start']->timestamp) - 1))),
                     'class' => $event['class'],
                     'label' => isset($event['label']) ? $event['label'] : '',
                     'url' => isset($event['url']) ? $event['url'] : '#',
@@ -86,7 +84,7 @@ class Gantti
 
         // build the months
         while ($current->lastDay()->timestamp <= $lastDay) {
-            if($this->options['monthago']) {
+            if ($this->options['monthago']) {
                 $month = $current->month()->past($this->options['monthago']);
             } else {
                 $month = $current->month();
@@ -141,10 +139,10 @@ class Gantti
         $html[] = $this->renderSidebar($cellstyle);
 
         $today = $this->cal->today();
-        if($this->options['monthago']) {
-            $offset = (($today->timestamp - $this->first->month()->past($this->options['monthago'])->timestamp) / self::ONE_DAY_IN_SECONDS);
+        if ($this->options['monthago']) {
+            $offset = (($today->timestamp - $this->first->month()->past($this->options['monthago'])->timestamp) / DAY_IN_SECONDS);
         } else {
-            $offset = (($today->timestamp - $this->first->month()->timestamp) / self::ONE_DAY_IN_SECONDS);
+            $offset = (($today->timestamp - $this->first->month()->timestamp) / DAY_IN_SECONDS);
         }
 
         $scroll = round(($offset * $this->options['cellwidth']) - 1);
@@ -198,10 +196,10 @@ class Gantti
 
             // today
             $today = $this->cal->today();
-            if($this->options['monthago']) {
-                $offset = (($today->timestamp - $this->first->month()->past($this->options['monthago'])->timestamp) / self::ONE_DAY_IN_SECONDS);    
+            if ($this->options['monthago']) {
+                $offset = (($today->timestamp - $this->first->month()->past($this->options['monthago'])->timestamp) / DAY_IN_SECONDS);
             } else {
-                $offset = (($today->timestamp - $this->first->month()->timestamp) / self::ONE_DAY_IN_SECONDS);
+                $offset = (($today->timestamp - $this->first->month()->timestamp) / DAY_IN_SECONDS);
             }
 
             $left = round($offset * $this->options['cellwidth']) + round(($this->options['cellwidth'] / 2) - 1);
@@ -229,25 +227,24 @@ class Gantti
      */
     private function createSingleEventHtml($event, $i)
     {
-
         $eventStart = \Carbon\Carbon::createFromTimestamp($event['start']);
         $eventEnd = \Carbon\Carbon::createFromTimestamp($event['end'])->timestamp;
         $firstEvent = \Carbon\Carbon::createFromTimestamp($this->first->month()->timestamp);
         $calendarStart = $this->first->month()->past($this->options['monthago'])->timestamp;
         $calendarStartDate = \Carbon\Carbon::createFromTimestamp($calendarStart);
 
-        if($eventStart->lessThan($calendarStartDate)){
+        if ($eventStart->lessThan($calendarStartDate)) {
             $diff = $calendarStart;
         } else {
             $diff = $event['start'];
         }
 
-        $days = (($event['end'] -  $diff) / self::ONE_DAY_IN_SECONDS) + 1.00; // dodato 0.2 // changed to 1.00
+        $days = (($event['end'] -  $diff) / DAY_IN_SECONDS) + 1.00; // dodato 0.2 // changed to 1.00
 
-        if($this->options['monthago']) {
-            $offset = (($event['start'] - $this->first->month()->past($this->options['monthago'])->timestamp) / self::ONE_DAY_IN_SECONDS); //dodato 0.35 changed to none
+        if ($this->options['monthago']) {
+            $offset = (($event['start'] - $this->first->month()->past($this->options['monthago'])->timestamp) / DAY_IN_SECONDS); //dodato 0.35 changed to none
         } else {
-            $offset = (($event['start'] - $this->first->month()->timestamp) / self::ONE_DAY_IN_SECONDS); //dodato 0.35 changed to none
+            $offset = (($event['start'] - $this->first->month()->timestamp) / DAY_IN_SECONDS); //dodato 0.35 changed to none
         }
 
         $top = round($i * ($this->options['cellheight'] + 1));
@@ -269,13 +266,13 @@ class Gantti
             $label_shorten = $event['label'];
         }
 
-        if($eventEnd >= $calendarStart){
+        if ($eventEnd >= $calendarStart) {
             $html = '<span data-event-start="'.$eventStart.'" data-first-event="'.$firstEvent.'" class="gantt-block' . $class . ''.($width < 120 ? ' collapsed' : '').'" style="left: ' . max($left, 0) . 'px; width: ' . $width . 'px; height: ' . $height . 'px; text-align: left;" data-position-left="'.max($left, 0).'" data-width="'.$width.'">';
 
             if ($event['tooltip']) {
-                $html .= '<a href="' . $url . '" style="margin-top:3px; margin-left:5px; overflow:hidden; width: ' . ($width < 120 ? $width - 10: '') . 'px;" class="btn black"  data-placement="top" tabindex="' . $i . '" data-html="true" data-trigger="focus" data-toggle="popover" title="' . $label . '" data-content="' . $tooltip . '">' . ($left < 0 ? '<span class="ellipsis">...</span>' : '') . ' <span class="name"><i class="fa ' . $icon . '"></i> ' . $tooltip . '</span></a>';
+                $html .= '<a href="' . $url . '" style="margin-top:3px; margin-left:5px; overflow:hidden; width: ' . ($width < 120 ? $width - 10 : '') . 'px;" class="btn black"  data-placement="top" tabindex="' . $i . '" data-html="true" data-trigger="focus" data-toggle="popover" title="' . $label . '" data-content="' . $tooltip . '">' . ($left < 0 ? '<span class="ellipsis">...</span>' : '') . ' <span class="name"><i class="fa ' . $icon . '"></i> ' . $tooltip . '</span></a>';
             } else {
-                $html .= '<a href="' . $url . '" style="margin-top:3px; margin-left:5px; overflow:hidden; width: ' . ($width < 120 ? $width - 10: '') . 'px;" class="btn black">' . ($left < 0 ? '<span class="ellipsis">...</span>' : '') . ' <span class="name"><i class="fa ' . $icon . '"></i> ' . $tooltip . '</span></a>';
+                $html .= '<a href="' . $url . '" style="margin-top:3px; margin-left:5px; overflow:hidden; width: ' . ($width < 120 ? $width - 10 : '') . 'px;" class="btn black">' . ($left < 0 ? '<span class="ellipsis">...</span>' : '') . ' <span class="name"><i class="fa ' . $icon . '"></i> ' . $tooltip . '</span></a>';
             }
 
             $html .= '<span style="display: inline-block; margin-top:3px; margin-left:5px; color:white;">' . $label_shorten . '</span>';
@@ -312,6 +309,16 @@ class Gantti
         $html .= '</ul>';
         $html .= '</aside>';
         return $html;
+    }
+
+    private function days_left_in_year($timestamp)
+    {
+        $normalDaysInYear = 365;
+        // leap year or not
+        $daysInYear = date('L', $timestamp) == 1 ? $normalDaysInYear+1 : $normalDaysInYear;
+        // which day of the year
+        $dayOfTheYear = date('z', $timestamp);
+        return $daysInYear - $dayOfTheYear;
     }
 
 //    function __toString() {

@@ -19,10 +19,11 @@
       "email": "honeydove_mhar@yahoo.com"
     }
   ],
-  "version":"4.2.13.2",
+  "version":"4.2.15",
   "require": {
     "php": ">=7.1.3",
-    "illuminate/support": "5.7.*|5.8.*"
+    "illuminate/support": "5.7.*|5.8.*",
+    "stevegrunwell/time-constants": "^1.1"
   },
   "autoload": {
     "psr-0": {

@@ -1,4 +1,6 @@
-<?php namespace Ognjenm\ReservationsCalendar\Facades;
+<?php
+
+namespace Ognjenm\ReservationsCalendar\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
@@ -15,5 +17,4 @@ class ResCalendar extends Facade
     {
         return 'rescalendar';
     }
-
 }
