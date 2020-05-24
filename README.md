@@ -1,4 +1,4 @@
-# Laravel 5 Booking Calendar
+# Laravel 5/6 Booking Calendar
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/repat/nachofassini-reservations-calendar.svg?style=flat-square)](https://packagist.org/packages/repat/nachofassini-reservations-calendar)
 [![Total Downloads](https://img.shields.io/packagist/dt/repat/nachofassini-reservations-calendar.svg?style=flat-square)](https://packagist.org/packages/repat/nachofassini-reservations-calendar)
 
